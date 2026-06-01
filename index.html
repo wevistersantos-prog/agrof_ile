@@ -3,169 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Ciclo do Agro no Brasil</title>
+    <title>AgroEco: O Desafio Sustentável</title>
     <style>
-        /* Configurações Gerais de Design */
+        /* --- ESTILOS GERAIS E CENÁRIO --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
 
         body {
-            background-color: #f4f7f4;
-            color: #333;
-            line-height: 1.6;
+            background: #2c3e50;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
 
-        header {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            color: white;
-            text-align: center;
-            padding: 3rem 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        h1 {
+            color: #2ecc71;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px #27ae60;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .instrucao {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #2e7d32;
-            margin-bottom: 2rem;
-            font-weight: bold;
-        }
-
-        /* O Segredo da Interatividade: Grid e Efeito Hover */
-        .ciclo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-
-        /* Efeito de erguer o card quando passa o mouse */
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .card-topo {
-            background-color: #81c784;
-            color: #1b5e20;
-            padding: 1.5rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-bottom: 4px solid #2e7d32;
-        }
-
-        .card-corpo {
-            padding: 1.5rem;
-        }
-
-        /* Onde o código havia travado - Corrigido e completado */
-        .etapa {
-            margin-bottom: 1.5rem;
-            padding-left: 1rem;
-            border-left: 4px solid #2e7d32; 
-        }
-
-        .etapa h3 {
-            color: #1b5e20;
-            margin-bottom: 0.5rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            color: #666;
+        .subtitulo {
             font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        /* --- PAINEL DE STATUS (RECURSOS) --- */
+        .painel-status {
+            background: #34495e;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex;
+            gap: 40px;
+            box-shadow: 0 8px 0 #2c3e50;
+            margin-bottom: 30px;
+            border: 3px solid #1abc9c;
+        }
+
+        .status-item {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- O TABULEIRO DA FAZENDA (GRID) --- */
+        .fazenda-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 120px);
+            grid-template-rows: repeat(2, 120px);
+            gap: 15px;
+            background: #855e42; /* Cor de terra */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 10px 0 #5c3a21;
+            margin-bottom: 30px;
+        }
+
+        /* Esconder os inputs reais (o segredo do clique) */
+        .plot-input {
+            display: none;
+        }
+
+        /* O lote de terra clicável */
+        .lote {
+            background: #a0522d;
+            border: 4px solid #8b4513;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lote:hover {
+            transform: scale(1.05);
+            background: #b25e38;
+            border-color: #cd853f;
+        }
+
+        /* Icone base de terra vazia */
+        .lote::after {
+            content: "🟫";
+            font-size: 2rem;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        /* --- INTERATIVIDADE: O que acontece quando clica (PLANTIO) --- */
+        
+        /* Lotes ímpares simuladores de Agrofloresta (Sustentável) */
+        .agro:checked + .lote {
+            background: #2e7d32;
+            border-color: #1b5e20;
+        }
+        .agro:checked + .lote::after {
+            content: "🌳🍓"; /* Árvores + Frutas juntas */
+            opacity: 1;
+        }
+
+        /* Lotes pares simuladores de Plantio Direto Rotativo */
+        .rotativo:checked + .lote {
+            background: #27ae60;
+            border-color: #1e8449;
+        }
+        .rotativo:checked + .lote::after {
+            content: "🌱🌽"; /* Milho protegido pela palha */
+            opacity: 1;
+        }
+
+        /* --- INSTRUÇÕES E REGRAS SUSTENTÁVEIS --- */
+        .painel-instrucoes {
+            background: #34495e;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2ecc71;
+        }
+
+        .painel-instrucoes h3 {
+            color: #2ecc71;
+            margin-bottom: 10px;
+        }
+
+        .painel-instrucoes ul {
+            list-style-type: none;
+        }
+
+        .painel-instrucoes li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>O Ciclo do Agro no Brasil</h1>
-        <p>Entenda a jornada do campo até a mesa</p>
-    </header>
+    <h1>AgroEco</h1>
+    <p class="subtitulo">Simulador de Gestão e Agro Inteligente</p>
 
-    <div class="container">
-        <p class="instrucao">Passe o mouse sobre os cards para interagir</p>
-
-        <div class="ciclo-grid">
-            <div class="card">
-                <div class="card-topo">1. Preparo</div>
-                <div class="card-corpo">
-                    <div class="etapa">
-                        <h3>Análise do Solo</h3>
-                        <p>Verificação de nutrientes e correção da acidez da terra.</p>
-                    </div>
-                    <div class="etapa">
-                        <h3>Arado e Adubação</h3>
-                        <p>Deixar a terra fofa e rica para receber as sementes.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-topo">2. Cultivo</div>
-                <div class="card-corpo">
-                    <div class="etapa">
-                        <h3>Plantio</h3>
-                        <p>Uso de tecnologia de precisão para semear no tempo certo.</p>
-                    </div>
-                    <div class="etapa">
-                        <h3>Manejo e Irrigação</h3>
-                        <p>Cuidado contra pragas e controle do uso da água.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-topo">3. Colheita</div>
-                <div class="card-corpo">
-                    <div class="etapa">
-                        <h3>Apanha</h3>
-                        <p>Uso de maquinário moderno para colher com eficiência.</p>
-                    </div>
-                    <div class="etapa">
-                        <h3>Distribuição</h3>
-                        <p>Logística e transporte para abastecer o mercado interno e exportação.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="painel-status">
+        <div class="status-item">💰 <span id="moedas">100</span></div>
+        <div class="status-item">🍃 Sustentabilidade: <span style="color: #2ecc71;">100%</span></div>
+        <div class="status-item">🚜 Produção: <span style="color: #f1c40f;">Forte</span></div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 - O Ciclo do Agro no Brasil. Todos os direitos reservados.</p>
-    </footer>
+    <div class="fazenda-grid">
+        
+        <input type="checkbox" id="lote1" class="plot-input agro">
+        <label for="lote1" class="lote" title="Clique para implantar Agrofloresta!"></label>
+
+        <input type="checkbox" id="lote2" class="plot-input rotativo">
+        <label for="lote2" class="lote" title="Clique para fazer Rotação de Milho!"></label>
+
+        <input type="checkbox" id="lote3" class="plot-input agro">
+        <label for="lote3" class="lote" title="Clique para implantar Agrofloresta!"></label>
+
+        <input type="checkbox" id="lote4" class="plot-input rotativo">
+        <label for="lote4" class="lote" title="Clique para fazer Rotação de Milho!"></label>
+
+        <input type="checkbox" id="lote5" class="plot-input agro">
+        <label for="lote5" class="lote" title="Clique para implantar Agrofloresta!"></label>
+
+        <input type="checkbox" id="lote6" class="plot-input rotativo">
+        <label for="lote6" class="lote" title="Clique para fazer Rotação de Milho!"></label>
+
+    </div>
+
+    <div class="painel-instrucoes">
+        <h3>Como Jogar:</h3>
+        <ul>
+            <li>Mudança no Espaço: Clique nos quadrados de terra marrom para aplicar suas estratégias.</li>
+            <li>🌳 <strong>Lotes Ímpares:</strong> Sistema de Agrofloresta (recupera o solo e gera frutas preciosas).</li>
+            <li>🌽 <strong>Lotes Pares:</strong> Plantio Direto Rotativo (produção em alta escala sem desgastar a terra).</li>
+            <li>💡 <em>Para resetar a fazenda e colher, basta atualizar a página (F5)!</em></li>
+        </ul>
+    </div>
 
 </body>
 </html>
